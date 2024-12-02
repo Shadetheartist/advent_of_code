@@ -1,7 +1,13 @@
 import math
+import json
+
 sign = lambda x: math.copysign(1, x)
 
+is_safe_calls = 0
 def is_safe(report):
+    global is_safe_calls
+    is_safe_calls += 1
+
     s = 0
     for i in range(0, len(report) - 1):
         a = report[i]
@@ -32,12 +38,18 @@ def without(arr, idx):
 with open('input') as file:
     lines = [line.rstrip().split('   ') for line in file]
     reports = list(map(lambda r: list(map(int, r[0].split(' '))), lines))
-    safes = 0
-    for r in reports:
+    safes = {}
+    for n, r in enumerate(reports):
         for i in range(-1, len(r)):
             safe = is_safe(without(r, i))
             if safe:
-                safes += 1
+                safes[n] = i
                 break
 
     print(safes)
+    print('n = ', len(safes))
+
+    with open('solutions', 'w') as out_file:
+        json.dump(safes, out_file)
+
+print(is_safe_calls)
