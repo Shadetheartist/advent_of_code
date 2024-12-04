@@ -1,5 +1,3 @@
-import re
-
 next_map = {
     'X': 'M',
     'M': 'A',
@@ -20,21 +18,6 @@ pos_matrix = [
     (+0, +1),
     (+1, +1),
 ]
-
-
-def neighbourhood(x, y, matrix_size):
-    global pos_matrix
-    for m in pos_matrix:
-        _x, _y = x + m[0], y + m[1]
-        if 0 <= _x < matrix_size[0] and 0 <= _y < matrix_size[1]:
-            yield (_x, _y), m
-
-
-def neighbours(x, y, matrix):
-    size = (len(matrix[0]), len(matrix))
-    for pos, offset in neighbourhood(x, y, size):
-        yield val(*pos, matrix), pos, offset
-
 
 def val(x, y, matrix, size):
     if 0 <= x < size[0] and 0 <= y < size[1]:
